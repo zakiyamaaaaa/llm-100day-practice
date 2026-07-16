@@ -15,3 +15,6 @@ wheels/
 *.pyc
 
 .DS_Store
+
+# Chroma DB のデータベース実体（ローカル保存用データなのでコミットしない）
+.chroma_data/

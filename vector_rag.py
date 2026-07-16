@@ -53,6 +53,7 @@ def retrieve_relevant_docs_vector(query: str, threshold: float = 0.3) -> str:
         
         # 類似度を計算
         similarity = cosine_similarity(query_embedding, doc_embedding)
+        print(f"  - [{doc['title']}] との類似度: {similarity:.4f}")
         
         # 一定の類似度を超えたものだけを候補にする
         if similarity >= threshold:
