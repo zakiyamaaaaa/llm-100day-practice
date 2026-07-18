@@ -1,6 +1,8 @@
 import os
 from typing import List
 from dotenv import load_dotenv
+import chromadb
+from chromadb.utils import embedding_functions
 
 # 📝 1. 実務を想定した「長文の社内ガイドライン」
 LONG_DOCUMENT = """
@@ -63,12 +65,43 @@ def main():
     chunks = split_text_recursive(LONG_DOCUMENT, chunk_size=150, chunk_overlap=30)
     print(f"📊 分割完了！ 合計チャンク数: {len(chunks)} 個\n")
     
-    # 分割された中身を確認
-    for i, chunk in enumerate(chunks):
-        print(f"--- [チャンク {i+1}] (文字数: {len(chunk)}) ---")
-        print(chunk)
-        print()
-        
+    chroma_client = chromadb.PersistentClient(path="./.chroma_data")
+    openai_ef = embedding_functions.OpenAIEmbeddingFunction(
+        api_key=os.environ.get("OPENAI_API_KEY"),
+        model_name="text-embedding-3-small"
+    )
+    
+    # [remote_work_rules]という新しいコレクションを作成
+    collection = chroma_client.get_or_create_collection(
+        name="remote_work_rules",
+        embedding_function=openai_ef
+    )
+    
+    # 各チャンクに対応する一意のIDとメタデータを作成して、一括登録
+    ids = [f"chunk_{i+1}" for i in range(len(chunks))]
+    metadatas = [{"source": "remotework_guideline"} for _ in chunks]
+    
+    print("📥 分割したチャンクをChroma DBに登録中...")
+    collection.upsert(
+        documents=chunks,
+        ids=ids,
+        metadatas=metadatas
+    )
+    print("✅ 登録完了！\n")
+    
+    # テスト検索
+    query = "カフェで仕事して社内システムにアクセスしてもいいですか"
+    print(f"🔍 テスト検索: {query}")
+    
+    results = collection.query(
+        query_texts=[query],
+        n_results=1
+    )
+    
+    print("\n🔎 最も関連度の高いチャンクの検索結果:")
+    print(f"  - ドキュメントID: {results['ids'][0][0]}")
+    print(f"  - 距離スコア: {results['distances'][0][0]:.4f}")
+    print(f"  - 本文:\n{results['documents'][0][0]}")
 
 if __name__ == "__main__":
     main()
