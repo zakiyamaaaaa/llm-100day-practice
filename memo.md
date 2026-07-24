@@ -1,3 +1,8 @@
+2026/07/25
+
+- Promptの違いによる出力の差を検証
+- LLMの構成。Node, Edge, Stateの関係を整理
+
 2026/07/23
 BM25, RRF,rerankerを統合
 
