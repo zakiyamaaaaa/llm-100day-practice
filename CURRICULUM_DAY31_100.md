@@ -1,257 +1,304 @@
 # LLM / AIエンジニア 100日カリキュラム
 
 作成日: 2026-07-21  
-対象: Day 1〜30相当を終えた現在地点から、Day 100まで
+改訂日: 2026-07-28  
+現在地: Day 47完了、Day 48から再開
 
-## 進捗
+## 1. 最終ゴール
 
-- [x] Day 31: READMEによる現状の棚卸し、環境構築・実行手順・既知の課題の文書化
-- [ ] Day 32: BM25を自作し、キーワード検索の仕組みを理解する
-- [ ] 保留: `src/`構成、設定クラス、モデル名・閾値の一元管理
+Day 100のゴールは、LLM APIのサンプルを書けることではなく、次の内容を設計・実装・評価・説明できる「採用レベルのLLM / AIエンジニア」になること。
 
-## 1. 現在地
+- Token、Embedding、Attention、Context Windowを自分の言葉で説明できる
+- RAGの検索・生成・引用・未回答を分離して評価できる
+- Hybrid検索、Reranking、Context最適化を評価結果から選択できる
+- Tool CallingとAgentを、型検証・停止条件・権限・承認付きで実装できる
+- LLM機能をAPIとして公開し、非同期・Streaming・DB・認証を扱える
+- Prompt Injection、権限越境、秘密漏洩をテストできる
+- latency、token、cost、error、品質を観測できる
+- pytest、型検査、Lint、Docker、CI/CDで再現可能な開発ができる
+- 1つの完成プロジェクトについて、設計判断とトレードオフを面接で説明できる
 
-このリポジトリでは、2026-07-12から2026-07-21にかけて、17コミットと未コミットの学習成果が確認できた。実日数は約10日だが、扱ったテーマ量を基準にすると、Day 1〜30相当まで進んだとみなせる。
+最終成果物は「引用・評価・権限・承認・監視を備えた社内ナレッジ＆手続きエージェント」とする。
 
-### 時系列で確認できた内容
+## 2. 1日の学習時間
 
-| 日付 | 学習テーマ | 主な成果物 |
-|---|---|---|
-| 07/12 | Pythonプロジェクト、OpenAI APIの初回呼び出し | `main.py`, `pyproject.toml` |
-| 07/13 | 環境変数、Pydantic、構造化出力 | `structured_output.py` |
-| 07/14 | LLMによる入力安全性判定 | `security_filter.py` |
-| 07/15 | キーワードRAG、Embedding、コサイン類似度 | `simple_rag.py`, `vector_rag.py` |
-| 07/16 | ChromaDBによる永続ベクトル検索、Tool Calling | `chroma_rag.py`, `chroma_rag_complete.py`, `agent_function.py` |
-| 07/17〜18 | チャンキング、オーバーラップ、ファイル取り込み | `chanking_rag.py`, `file_ingest_rag.py`, `docs/` |
-| 07/18 | ハイブリッド検索、RRF | `hybrid_test.py`, `hybrid_search.py`, `rrf_search.py` |
-| 07/19〜20 | Function Callingの往復処理、ReActループ | `tool_calling_basic.py`, `tool_calling_complete.py`, `agent_react_loop.py` |
-| 07/21 | エージェント状態管理の導入 | `agent_state_model.py`, `memo.md` |
+1日約60分を標準とする。
 
-### すでに身についていること
+- 10分: 用語・原理・前日の復習
+- 30分: 既存コードを活かした実装
+- 10分: 実行・テスト・評価
+- 5分: 確認問題
+- 5分: `notes/day-XXX.md`と`progress.md`の更新
 
-- LLM APIの基本的な呼び出しと環境変数による秘密情報管理
-- Pydanticを使った構造化出力
-- RAGの基本構造（Retrieve → Augment → Generate）
-- Embedding、ベクトル検索、ChromaDB、チャンキング
-- ベクトル検索の弱点と、キーワード検索・RRFによる補完
-- Tool Callingのスキーマ、実行結果の返却、複数ターンのReActループ
-- 状態、永続化、Human-in-the-Loopが必要になる理由の理解
+1時間で終わらないテーマは複数Dayに分割する。大量の評価データ作成や全面的な書き直しだけを1日の課題にしない。
 
-### Day 31以降で埋めるべき穴
+## 3. 重複を避けるルール
 
-- `pytest`による単体・結合テスト、モック、型検査、Lint
-- 正解データセットと指標を使ったRAG・エージェント評価
-- BM25の実装、reranker、引用、検索失敗時の判定
-- 例外処理、タイムアウト、再試行、レート制限、コスト管理
-- 現行APIへの移行と、フレームワークを使う場合・使わない場合の判断
-- FastAPI、非同期処理、DB、認証、ストリーミング
-- ログ、トレース、メトリクス、セキュリティテスト
-- Docker、CI/CD、クラウドへのデプロイ
-- データ作成、fine-tuningの適否、マルチモーダル処理
+1. 以前作った機能は、同じ題材で再実装しない。
+2. 再登場する技術は、監査・テスト・堅牢化・統合・性能測定のどれかに発展させる。
+3. 新しいFrameworkは、既存の手書き実装と責務を比較してから導入する。
+4. BM25、RRF、Reranker、Tool Calling、ReActは既存コードを土台にする。
+5. `src/`構成への整理は、統合アプリの境界が見えたDay 93で行う。
+6. API料金が必要なテストと、ローカルだけで完結するテストを分ける。
+7. `memo.md`は個人メモとして変更せず、学習記録は`notes/`と`progress.md`へ保存する。
 
-## 2. 学習ルール
+## 4. 現在までの到達点
 
-1日90〜150分を標準とする。
+### Phase 1 — Day 1〜30: LLM・RAG・Tool Callingの基礎
 
-- 20分: 公式ドキュメントまたは原理を読む
-- 60〜100分: 実装する
-- 20分: テスト、計測、振り返りを行う
-- 毎日: `memo.md`に「仮説・結果・失敗・次の一手」を追記する
-- 毎週: README更新、全テスト実行、代表デモの録画またはスクリーンショットを残す
+到達点:
 
-「コードを書いた」ではなく、その日の合格条件を満たしたら完了とする。API料金を使うテストと、モックだけで完結するテストを分離する。
+- OpenAI API、環境変数、Pydantic、Structured Output
+- Prompt Injectionの基本的な検知
+- Embedding、コサイン類似度、ChromaDB
+- Chunking、ファイル取り込み
+- Hybrid検索、RRF
+- Tool Callingの往復処理
+- 手書きReActループと状態管理
 
-## 3. Day 31〜100
+### Phase 2 — Day 31〜47: 検索・評価・LLM内部理解
 
-### Week 5 — Day 31〜37: 検索アルゴリズムをサンプルで理解する
+| Day | 学習内容 | 状態 |
+|---:|---|:---:|
+| 31 | リポジトリと学習履歴の棚卸し | 完了 |
+| 32 | BM25の自作とスコア計算 | 完了 |
+| 33 | 日本語Tokenizerの比較 | 完了 |
+| 34 | BM25とベクトル検索の比較 | 完了 |
+| 35 | RRFによるランキング統合 | 完了 |
+| 36 | LLM Reranker | 完了 |
+| 37 | Hybrid RAG Pipeline | 完了 |
+| 38 | RAG評価ケースの設計 | 完了 |
+| 39 | Hit@k、MRR、未回答評価 | 完了 |
+| 40 | Groundedness、Relevance、正解判定 | 完了 |
+| 41 | Zero-shot、Few-shot、Grounded Prompt比較 | 完了 |
+| 42 | Optional、拒否、model validator | 完了 |
+| 43 | Token、Embedding、Attention、Context Window | 完了 |
+| 44 | Retrieval・Generation評価の統合レポート | 完了 |
+| 45 | 30ケースへの機械的な増加 | 保留。既存評価セットで代替 |
+| 46 | Recall@k | 完了 |
+| 47 | Citation Precision、Recall、引用根拠性 | 完了 |
 
-| Day | テーマ | 作るもの | 合格条件 |
+Phase 2の達成ポイント:
+
+- 検索失敗と生成失敗を分けて説明できる
+- BM25、Vector、Hybrid、Rerankerの役割を説明できる
+- 検索・回答・引用を数値で評価できる
+- PromptやTokenizer変更の効果を再現可能な結果で比較できる
+
+---
+
+## 5. Day 48〜100
+
+### Phase 3 — Day 48〜58: Production RAG
+
+フェーズゴール:
+
+> 既存のRAG部品を、更新可能・評価可能・引用付きの1本のPipelineとして統合する。
+
+採用で示すもの:
+
+- RAGの改善前後を比較した評価レポート
+- 文書更新に対応したIngest
+- 根拠付き回答と安全な未回答
+- 単体テスト付きProduction RAG v1
+
+| Day | テーマ | 前回内容の活用 | 60分の成果物・完了条件 |
 |---:|---|---|---|
-| 31 | 現状の棚卸し | READMEに構成図、実行方法、環境変数、既知の課題を記載 | 初見の人が15分以内に1例を実行できる |
-| 32 | BM25 | BM25の式を自作し、型番・規程番号を検索する | `様式第4号`が正しく1位になる |
-| 33 | 日本語tokenize | 形態素解析、文字n-gram、識別子分割を比較する | tokenizerの長所・限界を説明できる |
-| 34 | ベクトル検索との比較 | 同じ質問セットでBM25とChromaDBを比較する | 検索方式ごとの得意・不得意を示せる |
-| 35 | 実データでRRF | BM25とベクトル検索のIDランキングをRRFで統合する | 両方の順位を反映した結果を出せる |
-| 36 | リランキング | rule-basedまたはLLMによるrerankerを追加する | rerank前後の順位変化を説明できる |
-| 37 | Week 5演習 | ハイブリッド検索の小さなCLIを統合する | 質問、検索方式、最終順位を確認できる |
+| 48 | BM25品質監査 | `bm25_search.py`, Day32 | BM25式を修正し、修正前後の検索結果と指標を比較する |
+| 49 | Chunk境界の品質監査 | `chanking_rag.py`, `file_ingest_rag.py`、既存Tokenizer | 固定長の再実装ではなく、見出し・文・段落・形態素の役割を整理し、意味境界を壊さない分割方針を決める |
+| 50 | Metadata付きIngest | 既存のファイル取り込み | source・section・chunk_idを検索結果まで保持する |
+| 51 | 更新・削除・重複排除 | ChromaDBの永続化 | content hashで再投入時の重複を防ぐ |
+| 52 | Query Rewrite | 既存の評価セット | Rewriteあり・なしで失敗Queryを比較する |
+| 53 | Multi-query検索 | Vector検索とRRF | 1質問から複数Queryを作り、重複除去して統合する |
+| 54 | Rerankerの定量評価 | `llm_reranker.py` | 精度・API回数・latencyのBefore/Afterを記録する |
+| 55 | Context Builder | Hybrid検索結果 | 重複除去、並び替え、Token上限を1関数にまとめる |
+| 56 | 引用・未回答の統合 | Day40、Day47 | 回答にsourceを付け、根拠なしでは拒否する |
+| 57 | 失敗分類と閾値 | `evaluate_rag.py` | 検索失敗・生成失敗・引用失敗を分類し、拒否閾値を決める |
+| 58 | Production RAG v1 | Day48〜57の部品 | ingest→retrieve→rerank→answer→cite→evaluateが1コマンドで動く |
 
-週の成果物: BM25実装、比較実験、実データ版RRF、reranker。  
-到達基準: ベクトル検索だけに頼らず、質問の性質に応じて検索方式を選べる。
+Phase 3の達成ポイント:
 
-### Week 6 — Day 38〜44: RAG評価とLLMの入出力を深める
+- 文書追加・更新・再投入を安全に扱える
+- 回答に検証可能なsourceが付く
+- 情報不足時に推測せず回答を保留できる
+- 変更による品質・費用・latencyの差を説明できる
 
-| Day | テーマ | 作るもの | 合格条件 |
+---
+
+### Phase 4 — Day 59〜70: 安全なAgent・Tool・MCP
+
+フェーズゴール:
+
+> 既存のTool CallingとReActを、暴走・誤実行・障害に耐える状態付きAgentへ発展させる。
+
+採用で示すもの:
+
+- 型安全なTool Registry
+- 停止条件・予算・監査ログ付きAgent
+- CheckpointとHuman-in-the-Loop
+- RAG検索を公開するMCP Server
+
+| Day | テーマ | 前回内容の活用 | 60分の成果物・完了条件 |
 |---:|---|---|---|
-| 38 | 評価セット | 質問、正解文書、正解回答を30件作成する | 通常・表記揺れ・未回答を含む |
-| 39 | Retrieval指標 | Hit@k、Recall@k、MRRを自作する | 固定データで再現可能な数値が出る |
-| 40 | Generation評価 | groundedness、relevance、引用正確性を評価する | 人手評価とLLM評価を区別できる |
-| 41 | Prompt実験 | context、指示、few-shotの差を比較する | 10ケース以上で差を記録できる |
-| 42 | Structured Output深化 | Optional、Union、拒否、バリデーションを試す | 不正出力を安全に扱える |
-| 43 | Transformerとtoken | token、embedding、attention、context windowを学ぶ | 小さな数値例で説明できる |
-| 44 | Week 6演習 | `evaluate_rag`と学習レポートを作る | 1コマンドで評価を再実行できる |
+| 59 | Tool引数とAllowlist | `tool_calling_complete.py` | Pydantic引数と許可済みTool Registryを追加する |
+| 60 | Tool障害処理 | 既存Tool実行部 | JSON不正、未知Tool、例外、timeoutを構造化エラーで返す |
+| 61 | 複数Tool実行 | `agent_react_loop.py` | 並列可能Toolと依存Toolの実行順をテストする |
+| 62 | 停止条件と予算 | ReActの最大3ループ | 最大turn・Tool回数・時間・Token予算で必ず停止させる |
+| 63 | RAGをTool化 | Production RAG v1 | `search_documents` Toolからsource付き検索結果を返す |
+| 64 | 状態機械 | `agent_state_workflow.py` | state・node・edge・終了条件を純粋関数としてテストする |
+| 65 | Framework選定 | 手書きReActと状態機械 | LangGraph・Agents SDKの責務を比較し、LangGraph版の最小Graphを作る |
+| 66 | Checkpoint・再開 | LangGraphの状態 | SQLiteへ状態を保存し、プロセス終了後に再開する |
+| 67 | Human-in-the-Loop | 書き込みTool | approve・edit・rejectの3経路をテストする |
+| 68 | Memory設計 | 会話履歴とstate | 短期履歴・要約・ユーザー記憶を分離し、削除ルールを定義する |
+| 69 | MCPの基本 | RAG Tool | RAG検索をMCP Tool / Resourceとして公開する |
+| 70 | Agent v1演習 | Day59〜69 | 制限・再開・承認・監査ログ付きAgentをデモする |
 
-週の成果物: 評価セット、検索・回答指標、prompt実験レポート、LLM原理ノート。  
-到達基準: RAGとLLMの改善を、感想ではなく再現可能な実験結果で説明できる。
+Phase 4の達成ポイント:
 
-### Week 7 — Day 45〜51: 評価駆動RAG
+- Tool、Agent、Workflow、MCPの違いを説明できる
+- 不正な引数や未知Toolを実行しない
+- 無限ループを防ぎ、途中状態から再開できる
+- 副作用のある処理は人間の承認なしに実行されない
 
-| Day | テーマ | 作るもの | 合格条件 |
+---
+
+### Phase 5 — Day 71〜80: LLMアプリのAPI・データ設計
+
+フェーズゴール:
+
+> CLIサンプルを、他アプリから安全に利用できるRAG / Agent APIへ変える。
+
+採用で示すもの:
+
+- FastAPIのOpenAPI仕様
+- Streaming対応Query API
+- 永続DBとMigration
+- 認証・ACL・結合テスト
+
+| Day | テーマ | 前回内容の活用 | 60分の成果物・完了条件 |
 |---:|---|---|---|
-| 45 | 評価セット設計 | 社内規程を題材に質問・正解文書・正解回答を30件作成 | 通常、表記揺れ、未回答、攻撃を含む |
-| 46 | Retrieval指標 | Hit@k、MRR、Recall@kの実装 | 固定データで再現可能な数値が出る |
-| 47 | Generation指標 | groundedness、answer relevance、引用正確性の評価 | 人手評価とLLM評価を分けて記録する |
-| 48 | BM25 | 実際のBM25検索器を実装 | ベクトル・BM25を同一評価セットで比較する |
-| 49 | Hybrid + RRF | 両検索器をRRFで統合 | 単独検索よりHit@3が改善、または失敗理由を説明できる |
-| 50 | Chunk実験 | size、overlap、見出し保持をグリッド比較 | 最良設定を指標・費用・遅延から選ぶ |
-| 51 | Week 7演習 | `evaluate_rag`コマンドとMarkdownレポート | 1コマンドで評価を再実行できる |
+| 71 | FastAPI基礎 | Production RAG v1 | `/health`と`/query`を作りOpenAPI UIで実行する |
+| 72 | Ingest API | Metadata付きIngest | `/ingest`に型検証とエラー応答を追加する |
+| 73 | 非同期処理 | OpenAI・Embedding呼び出し | async版を作り、同期版との処理時間を比較する |
+| 74 | Streaming | 回答生成とAgent Event | SSEでTokenまたは進捗Eventを逐次返す |
+| 75 | DB Schema | 文書・会話・評価結果 | SQLite/PostgreSQL向けSchemaとMigrationを作る |
+| 76 | Background Job | Ingest処理 | job_id、進捗、成功、失敗理由を取得できる |
+| 77 | 認証・文書ACL | source metadata | user/adminを分け、他ユーザー文書を検索できないようにする |
+| 78 | APIの耐障害性 | timeout・retry・予算 | rate limit、timeout、retry、エラー形式を統一する |
+| 79 | API結合テスト | pytestと固定評価データ | ingest→query→citationの主要経路を自動テストする |
+| 80 | RAG API v1 | Day71〜79 | 認証・DB・Streaming付きAPIをREADME手順で再現する |
 
-週の成果物: 30問以上の評価セット、検索・回答の評価レポート。  
-到達基準: RAGの改善を「良さそう」ではなく数値で判断できる。
+Phase 5の達成ポイント:
 
-### Week 8 — Day 52〜58: 高精度RAGとデータパイプライン
+- LLM機能をHTTP APIとして提供できる
+- 非同期・Streaming・DB・認証の役割を説明できる
+- API障害を一定の形式で返し、結合テストで保証できる
 
-| Day | テーマ | 作るもの | 合格条件 |
+---
+
+### Phase 6 — Day 81〜90: Security・Observability・Delivery
+
+フェーズゴール:
+
+> 品質・安全性・速度・費用を継続的に観測し、再現可能な形で配布する。
+
+採用で示すもの:
+
+- 脅威モデルと攻撃テスト
+- 構造化Log、Trace、Metrics、SLO
+- 費用・負荷テスト
+- DockerとCI/CD
+
+| Day | テーマ | 前回内容の活用 | 60分の成果物・完了条件 |
 |---:|---|---|---|
-| 52 | PDF/Markdown取り込み | loader、文字正規化、メタデータ抽出 | source、page、sectionを保持して検索できる |
-| 53 | 更新・削除・重複排除 | content hashと差分ingest | 同じファイルを再投入して重複しない |
-| 54 | Query transformation | query rewrite、multi-query、HyDEを比較 | 評価セットで効果と追加費用を示す |
-| 55 | Reranking | cross-encoderまたはLLM rerankerを追加 | top-k精度と遅延のトレードオフを示す |
-| 56 | 引用と拒否 | ページ付き引用、閾値以下では回答しない処理 | 引用元にない主張をテストで検出する |
-| 57 | Context最適化 | 重複除去、並び替え、token budget制御 | context上限内で回答品質を維持する |
-| 58 | Week 8演習 | Production RAG v1 | ingest、検索、回答、引用、評価が一続きで動く |
+| 81 | 脅威モデリング | RAG APIとAgent | asset、trust boundary、attack path、対策を図示する |
+| 82 | 攻撃評価 | Prompt Injection検知 | direct/indirect injection、data exfiltrationの固定テストを作る |
+| 83 | 多層Guardrail | Structured Output・ACL | 入力・検索・出力・Tool・権限の防御を分離する |
+| 84 | 構造化Log | APIとAgent実行 | request_id、latency、token、cost、Tool結果を秘密なしで記録する |
+| 85 | Tracing | Retrieval・LLM・Tool | 1リクエストをspanで追跡し、失敗箇所を特定する |
+| 86 | MetricsとSLO | 評価指標とAPI計測 | p50/p95、成功率、Grounded率、費用の目標値を決める |
+| 87 | 費用・latency最適化 | Prompt・Context Builder | cache、batch、model routingを1条件ずつ比較する |
+| 88 | 負荷テスト | RAG API v1 | 同時実行時のp95、error率、1件単価を記録する |
+| 89 | Docker | API・DB・設定 | 新しい環境で1コマンド起動できる |
+| 90 | CI/CD | tests・eval・Docker | lint、型、test、eval、image buildを自動実行する |
 
-週の成果物: 更新可能で引用付きのRAGパイプライン。  
-到達基準: 文書追加・更新・削除と、根拠付き回答を安全に扱える。
+Phase 6の達成ポイント:
 
-### Week 9 — Day 59〜65: Tool Calling、MCP、エージェント
+- 本番障害を再現・分類・追跡できる
+- 秘密情報をLogに残さず、品質と費用を計測できる
+- Pull Request相当の変更で品質低下を自動検出できる
+- Dockerで第三者が同じ環境を再現できる
 
-| Day | テーマ | 作るもの | 合格条件 |
+---
+
+### Phase 7 — Day 91〜100: 卒業制作・採用準備
+
+フェーズゴール:
+
+> これまでの部品を1つの完成プロジェクトに統合し、採用面接で設計・実装・評価・運用を説明できる状態にする。
+
+卒業制作:
+
+「引用・権限・承認・評価・監視を備えた社内ナレッジ＆手続きエージェント」
+
+| Day | テーマ | 前回内容の活用 | 60分の成果物・完了条件 |
 |---:|---|---|---|
-| 59 | 堅牢なTool Calling | Pydantic引数、許可リスト、timeout、エラー戻り値 | 壊れたJSON・未知tool・tool障害を処理できる |
-| 60 | 並列・依存tool | 並列可能な呼び出しと逐次呼び出しの実装 | 実行順序をテストで保証する |
-| 61 | 停止条件と予算 | 最大turn、最大tool回数、token・時間予算 | 無限ループが必ず停止する |
-| 62 | Agents SDK | 現在の手書きReActをSDK版で再実装 | 手書き版との責務の違いを説明できる |
-| 63 | MCPの基本 | tools、resources、promptsを持つローカルMCP server | Inspectorまたはclientから3 primitiveを確認できる |
-| 64 | MCPセキュリティ | 入力検証、最小権限、秘密情報非表示、監査ログ | 危険toolは明示承認なしに実行されない |
-| 65 | Week 9演習 | RAG検索をMCP tool/resourceとして公開 | 別clientから検索し、source付き結果を取得できる |
+| 91 | 要件定義 | 全フェーズの到達点 | user story、対象外、品質・latency・費用目標を決める |
+| 92 | Architecture・脅威モデル | RAG、Agent、API、DB | Component責務、Data flow、Trust boundaryを図示する |
+| 93 | Repository整理 | 独立Pythonスクリプト群 | 必要な責務だけ`src/`へ移し、設定と依存方向を固定する |
+| 94 | Core RAG統合 | Production RAG v1 | Ingest、Hybrid、Rerank、引用、未回答を統合する |
+| 95 | Agent統合 | Agent v1 | Tool、Checkpoint、承認、再開を統合する |
+| 96 | API・DB統合 | RAG API v1 | 認証、ACL、Streaming、履歴保存をつなぐ |
+| 97 | 品質仕上げ | eval、攻撃、負荷テスト | unit、integration、eval、security、loadを通す |
+| 98 | 配布・Deployment | Docker、CI/CD | 環境変数と秘密管理を含め、デプロイまたは再現手順を完成する |
+| 99 | Portfolio文書 | 評価結果と設計判断 | README、構成図、ADR、デモ手順、制約、改善案を書く |
+| 100 | 卒業審査 | 完成プロジェクト | 15分デモ、設計質疑、障害説明、履歴書用要約を完成する |
 
-週の成果物: 制限付きエージェントとローカルMCP server。  
-到達基準: tool、agent、MCPを混同せず、用途で選択できる。
+## 6. Day 100の採用レベル判定
 
-### Week 10 — Day 66〜72: 状態付きワークフローとHuman-in-the-Loop
+以下をすべて説明または実演できれば完了とする。
 
-| Day | テーマ | 作るもの | 合格条件 |
-|---:|---|---|---|
-| 66 | 状態機械 | agent state、node、edge、終了条件を図とコードで定義 | 同じ入力から決定的な遷移テストができる |
-| 67 | LangGraph基礎 | ReActをgraphとして再実装 | 各nodeを単体テストできる |
-| 68 | Checkpoint | SQLiteへ状態を保存し再開 | プロセス終了後も途中から再開できる |
-| 69 | Human-in-the-Loop | 書き込みtool直前にapprove/edit/reject | 3判断すべてをテストする |
-| 70 | Time travel | 過去checkpointからforkして再実行 | 元の履歴を壊さず別分岐を作れる |
-| 71 | Memory設計 | 会話履歴、要約、ユーザー記憶を分離 | retentionと削除ルールを明記する |
-| 72 | Week 10演習 | 承認付き社内手続きagent | 中断、再起動、承認、再開をデモできる |
+- LLMのToken、Embedding、Attention、Context Windowを説明できる
+- Prompt、RAG、Fine-tuningの使い分けを説明できる
+- Hybrid検索とRerankerの採用理由を評価結果から説明できる
+- Retrieval、Generation、Citationを別々に評価できる
+- 15件以上の厳選した固定評価セットに、通常・未回答・攻撃・回帰ケースがある
+- 回答にsourceまたはsectionの引用が付く
+- 情報不足時は推測せず回答を拒否できる
+- Toolに型検証、Allowlist、timeout、停止条件、予算、監査Logがある
+- 副作用のあるToolはHuman-in-the-Loopを通る
+- AgentをCheckpointから再開できる
+- APIに認証、ACL、rate limit、Streaming、health checkがある
+- latency、token、cost、error、品質を追跡できる
+- unit、integration、eval、security testがある
+- Lint、型検査、test、eval、Docker buildがCIで通る
+- DockerまたはDeployment手順で第三者が再現できる
+- READMEだけで15分以内に主要Demoを実行できる
+- 「なぜこの設計にしたか」「代替案は何か」を面接形式で説明できる
 
-週の成果物: 永続化・承認・再開が可能な状態付きagent。  
-到達基準: 「会話配列」ではなく、障害復旧可能なワークフローとして設計できる。
+## 7. 毎日の完了ルール
 
-### Week 11 — Day 73〜79: API・データベース・非同期処理
+次の順番を守る。
 
-| Day | テーマ | 作るもの | 合格条件 |
-|---:|---|---|---|
-| 73 | FastAPI | `/health`, `/ingest`, `/query` | OpenAPI UIから3 endpointを操作できる |
-| 74 | 非同期処理 | async client、並列embedding、timeout | 同条件の同期版より処理時間を短縮する |
-| 75 | Streaming | SSEでtokenとagent eventを返す | client切断時に処理を適切に停止する |
-| 76 | 永続DB | 会話、文書、評価結果のschemaとmigration | DBを作り直して同じ状態を再現できる |
-| 77 | Background jobs | 大容量ingestをjob化 | 状態・進捗・失敗理由を取得できる |
-| 78 | 認証と認可 | user/admin、文書ACL、rate limit | 他ユーザーの文書を検索できない |
-| 79 | Week 11演習 | 複数ユーザー対応RAG API | API結合テストが通る |
+1. `CURRICULUM_DAY31_100.md`と`progress.md`から現在Dayを確認する
+2. 用語と目的を初心者向けに説明する
+3. 既存成果を確認し、重複しない実装を行う
+4. 実行結果を確認する
+5. 確認問題を出し、1問ずつ採点する
+6. 不十分なら小さな追加問題を出す
+7. 理解できたら`notes/day-XXX.md`を作成または更新する
+8. `progress.md`へ完了状況、問題数、正答率、API費用、要復習事項を記録する
+9. 記録が終わるまで次のDayへ進まない
 
-週の成果物: 認証・非同期・streamingを備えたRAG API。  
-到達基準: notebookやCLIではなく、他アプリから安全に利用できる。
+## 8. 範囲外・卒業後の選択科目
 
-### Week 12 — Day 80〜86: セキュリティ・観測・継続評価
+採用レベルのCoreを優先するため、以下はDay100後の選択科目とする。
 
-| Day | テーマ | 作るもの | 合格条件 |
-|---:|---|---|---|
-| 80 | 脅威モデリング | asset、trust boundary、attack path、対策表 | prompt injection以外を5種類以上扱う |
-| 81 | RAG security | indirect injection、data exfiltration、poisoningの試験 | 攻撃セットを自動テストできる |
-| 82 | Guardrails | 入力・出力・tool・権限の多層防御 | 単一LLM判定だけに依存しない |
-| 83 | 構造化ログ | request ID、latency、token、cost、tool結果 | 秘密・個人情報をログに残さない |
-| 84 | Tracing | model、retrieval、toolをspanとして可視化 | 失敗した1リクエストを追跡できる |
-| 85 | Metrics/SLO | p50/p95、成功率、groundedness、費用のdashboard | SLOとalert条件を文章化する |
-| 86 | Week 12演習 | nightly evalと回帰判定 | 品質低下時にCIが失敗する |
+- Vision・画像/PDF理解の高度化
+- Realtime音声
+- Fine-tuningの実行
+- 複数Agentによる役割分担
+- Kubernetes
+- 大規模分散Vector DB
 
-週の成果物: 攻撃テスト、trace、metrics、継続評価。  
-到達基準: 本番の失敗を再現・分類・検知できる。
-
-### Week 13 — Day 87〜93: マルチモーダル、データ改善、デプロイ
-
-| Day | テーマ | 作るもの | 合格条件 |
-|---:|---|---|---|
-| 87 | Vision | 表・図を含む画像/PDFへの質問応答 | 文字だけでは解けない10問で評価する |
-| 88 | 音声またはRealtime | 音声入力→tool→音声/テキスト回答の試作 | interruptionとtimeoutを処理できる |
-| 89 | Fine-tuning判断 | prompt/RAG/fine-tuningの選定表 | 目的、データ量、評価法から採否を説明できる |
-| 90 | データセット品質 | train/dev/test分割、重複・漏洩検査 | testデータを調整に使わない手順を作る |
-| 91 | Docker | API、worker、DBの開発環境 | 新しい環境で1コマンド起動できる |
-| 92 | CI/CD | lint、型、test、eval、image build | pull request相当で全checkが自動実行される |
-| 93 | 負荷・費用テスト | concurrency、cache、batch、rate limit実験 | 想定負荷のp95と1件単価を報告できる |
-
-週の成果物: マルチモーダル試作とデプロイ可能なcontainer。  
-到達基準: 品質、速度、費用の3軸で本番構成を説明できる。
-
-### Week 14 — Day 94〜100: 卒業制作
-
-卒業制作は「引用・権限・承認・評価を備えた社内ナレッジ＆手続きエージェント」とする。題材は変更してよいが、要件は減らさない。
-
-| Day | テーマ | 作るもの | 合格条件 |
-|---:|---|---|---|
-| 94 | 要件定義 | user story、非機能要件、脅威モデル、評価指標 | 完了条件が数値化されている |
-| 95 | 設計 | architecture、DB schema、API、agent state図 | 各componentの責務と境界が明確 |
-| 96 | Core実装 | ingest、hybrid retrieval、rerank、引用回答 | end-to-endの主要経路が動く |
-| 97 | Agent実装 | MCP/tool、永続state、承認、再開 | 危険操作が必ず承認待ちになる |
-| 98 | 品質仕上げ | tests、security suite、eval、負荷試験 | 主要SLOと品質閾値を満たす |
-| 99 | 公開準備 | Docker、CI/CD、運用手順、デモ動画 | 第三者がREADMEだけで再現できる |
-| 100 | 卒業審査 | 15分デモ、設計説明、障害対応、振り返り | 下記チェックリストをすべて満たす |
-
-## 4. Day 100の卒業基準
-
-- 50問以上の固定評価セットがある
-- RetrievalのHit@k/MRRと、回答のgroundednessを継続計測している
-- 回答にsource・pageまたはsectionの引用が付く
-- 情報不足時は推測せず回答を保留できる
-- prompt injection、権限越境、秘密漏洩の自動テストがある
-- toolに型検証、timeout、retry、停止条件、権限、監査ログがある
-- 副作用のあるtoolはHuman-in-the-Loopを通る
-- 会話やagent処理をcheckpointから再開できる
-- APIに認証、rate limit、streaming、health checkがある
-- trace、latency、token、cost、error rateを確認できる
-- lint、型検査、単体・結合・評価テストがCIで通る
-- Dockerで再現でき、READMEに構成、実行、評価、制約が書かれている
-- 「なぜこのモデル・検索方式・agent構成にしたか」を評価結果で説明できる
-
-## 5. 週次レビューの採点表
-
-毎週末、各項目を0〜2点で自己採点する。合計8点未満なら翌週の初日に補習する。
-
-| 項目 | 0点 | 1点 | 2点 |
-|---|---|---|---|
-| 理解 | 説明できない | 例を見れば説明できる | 制約と代替案まで説明できる |
-| 実装 | 未完成 | happy pathのみ | 例外・境界値も扱う |
-| テスト | なし | 手動確認 | 自動テストと固定データがある |
-| 評価 | 感想のみ | 一部を計測 | 再現可能な指標で比較した |
-| 文書化 | なし | メモのみ | 第三者が再現できる |
-
-## 6. 公式資料の起点
-
-APIやフレームワークは変化するため、ブログ記事より公式資料を優先し、モデル名やAPI形状をハードコードする前に再確認する。
-
-- [OpenAI API model guidance](https://developers.openai.com/api/docs/guides/latest-model)
-- [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/)
-- [OpenAI Agents SDK tracing](https://openai.github.io/openai-agents-python/tracing/)
-- [LangGraph persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
-- [LangChain Human-in-the-Loop](https://docs.langchain.com/oss/python/langchain/human-in-the-loop)
-- [MCP architecture](https://modelcontextprotocol.io/docs/learn/architecture)
-- [MCP authorization](https://modelcontextprotocol.io/docs/tutorials/security/authorization)
-
-## 7. 直近の着手順
-
-次回はDay 31から始める。ただし、最初の1週間では新しいagent frameworkを追加しない。先に既存のRRF、chunking、Tool Callingを純粋関数へ分割してテストで固定する。その後に同じ機能をResponses API、Agents SDK、LangGraphへ段階的に移すことで、フレームワーク内部の仕事を理解した状態で使えるようにする。
+これらは必要性が生じたときに追加し、Coreの未完成を残したまま広げない。

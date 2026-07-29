@@ -70,17 +70,27 @@ class BM25Index:
         document_length = self.document_lengths[document_index]
         score = 0.0
         
+        # 同じQuery tokenを重複して加算しない
         for token in set(query_tokens):
             term_frequency = term_frequencies.get(token, 0)
+            
+            # 文書に存在しない単語はスコアに影響しない
             if term_frequency == 0:
                 continue
             
+            # 珍しい単語ほど重要になる
             idf = self._inverse_document_frequency(token)
             
+            # 文書の長さを考慮して、スコアを正規化する
             length_normalizer = (1.0 - self.b + self.b*document_length/ self.average_document_length)
+
+            # 標準的なBM25の分子
+            # tfが増えるほどスコアは上がるが、k1によって上限がある
+            numerator = term_frequency * (self.k1 + 1.0)
             
-            numerator = term_frequency + (self.k1 + 1.0)
-            denominator = (term_frequency + self.k1 + length_normalizer)
+            # 標準的なBM25の分母
+            # 文書長の補正値にはk1を掛ける
+            denominator = (term_frequency + self.k1 * length_normalizer)
             
             score += idf * numerator /denominator
         
