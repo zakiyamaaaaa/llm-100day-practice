@@ -1,6 +1,6 @@
 # LLM/AIエンジニア 100日進捗表
 
-更新日: 2026-08-05
+更新日: 2026-08-06
 
 記号: `[ ]` 未着手 / `[x]` 完了 / `[!]` 要復習
 
@@ -33,7 +33,7 @@
 | 055 | [x] | 3 | 100% | 未確認 | Context Builder、source追跡、Token予算とContext Windowの違い |
 | 056 | [x] | 4 | 100% | 未確認 | Python・LLM・Pydanticの役割分担、Context外引用の拒否 |
 | 057 | [x] | 4 | 100% | 0 | Retrieval・Generation・Citationの失敗分類、拒否の意味、閾値の調整 |
-| 058 | [ ] | — | — | — | — |
+| 058 | [x] | 6 | 100% | 未確認 | Production RAG v1、Smoke TestとGeneration評価、Groundedと正解判定の分離 |
 | 059 | [ ] | — | — | — | — |
 | 060 | [ ] | — | — | — | — |
 | 061 | [ ] | — | — | — | — |
