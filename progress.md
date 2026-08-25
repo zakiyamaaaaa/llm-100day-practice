@@ -1,6 +1,6 @@
 # LLM/AIエンジニア 100日進捗表
 
-更新日: 2026-08-13
+更新日: 2026-08-20
 
 記号: `[ ]` 未着手 / `[x]` 完了 / `[!]` 要復習
 
@@ -41,8 +41,8 @@
 | 063 | [x] | 4 | 25% | 未確認 | Rerankerの採点基準、sourceと候補文書・最終引用の違い |
 | 064 | [x] | 23 | 74%→100% | 0 | State・Node・Edge、純粋関数、遷移テスト。初回正答率74%、最終理解率100% |
 | 065 | [x] | 21 | 100% | 未確認 | LangGraphのState・Node・Edge、Conditional Edge、node_history。既存のLLM分類・RAG・回答生成を最小Graphへ統合 |
-| 066 | [ ] | — | — | — | — |
-| 067 | [ ] | — | — | — | — |
+| 066 | [x] | 15 | 80%→100% | 未確認 | Checkpoint、InMemorySaverとSqliteSaver、checkpointerとthread_idの役割、プロセス終了後のSQLite再開 |
+| 067 | [x] | 8 | 87.5%→100% | 未確認 | Human-in-the-Loop、interrupt、Command(resume)、approve/edit/reject、承認後のAllowlist・引数検証 |
 | 068 | [ ] | — | — | — | — |
 | 069 | [ ] | — | — | — | — |
 | 070 | [ ] | — | — | — | — |
