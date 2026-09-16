@@ -4,6 +4,21 @@
 
 現在はDay 31です。Day 1〜30相当では、構造化出力、RAG、Embedding、ChromaDB、ハイブリッド検索、Tool Calling、ReAct、状態管理を実装しました。今後の計画は[Day 31〜100カリキュラム](./CURRICULUM_DAY31_100.md)を参照してください。
 
+## LLM QUEST — 学習ロードマップ
+
+教材全体を7フェーズ・21クエストに体系化した、日本語のブラウザゲームを収録しています。クエストの完了・進行中状態・獲得XPはブラウザの`localStorage`へ自動保存されます。
+
+```bash
+npm run dev
+```
+
+ブラウザで `http://localhost:4173` を開いてください。ゲームの状態管理テストは次のコマンドで実行できます。
+
+```bash
+npm test
+npm run check
+```
+
 ## 現在の構成
 
 ```mermaid

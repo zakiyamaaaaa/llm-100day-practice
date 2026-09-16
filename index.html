@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="100日で一人前のAI・LLMエンジニアを目指すクエスト型ロードマップ" />
+    <title>LLM QUEST — 100日の開発者ロードマップ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient--one" aria-hidden="true"></div>
+    <div class="ambient ambient--two" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="LLM Quest トップ">
+        <span class="brand-mark">LQ</span>
+        <span><strong>LLM QUEST</strong><small>100 DAYS TO PRODUCTION</small></span>
+      </a>
+      <div class="header-center">
+        <span>学習ロードマップ</span>
+        <i></i>
+        <span>全7フェーズ / 21クエスト</span>
+      </div>
+      <button class="ghost-button" id="reset-progress">進捗をリセット</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> CAREER ADVENTURE / 001</div>
+          <h1>コードを呼ぶ人から、<br /><em>信頼できるAI</em>を<br />つくる人へ。</h1>
+          <p>
+            100日分の教材を、実務スキルへつながる7つの冒険に再構成。
+            小さな実装と評価を積み重ね、最後は本番品質のナレッジエージェントを完成させよう。
+          </p>
+          <div class="hero-actions">
+            <button class="primary-button primary-button--hero" id="resume-quest">次のクエストへ</button>
+            <span><strong>1日 60分</strong><small>理論 10 · 実装 30 · 検証 20</small></span>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit--outer"><span></span><span></span><span></span></div>
+          <div class="orbit orbit--inner"></div>
+          <div class="core"><span>100</span><small>DAYS</small></div>
+          <div class="art-label art-label--top">EVALUATE</div>
+          <div class="art-label art-label--right">SHIP</div>
+          <div class="art-label art-label--bottom">BUILD</div>
+          <div class="art-label art-label--left">LEARN</div>
+        </div>
+      </section>
+
+      <section class="adventure-layout">
+        <aside class="player-panel">
+          <div id="player-stats"></div>
+          <div class="rule"></div>
+          <div class="checkpoint">
+            <span class="overline">冒険のルール</span>
+            <p><b>01</b> 前のフェーズを踏破すると、次のエリアが解放されます。</p>
+            <p><b>02</b> クリア条件をコードと結果で確かめてから完了にしましょう。</p>
+            <p><b>03</b> 正解だけでなく、失敗と設計判断も学習記録に残します。</p>
+          </div>
+        </aside>
+
+        <div class="map-column">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow"><span></span> QUEST MAP</span>
+              <h2>一人前への冒険地図</h2>
+            </div>
+            <p>各カードを選ぶと、右側にクリア条件が表示されます。</p>
+          </div>
+          <div id="quest-map"></div>
+        </div>
+
+        <aside class="detail-panel" id="quest-detail" aria-live="polite"></aside>
+      </section>
+    </main>
+
+    <footer>
+      <span>LLM QUEST</span>
+      <p>教材: LLM / AIエンジニア 100日カリキュラム</p>
+      <small>BUILD · EVALUATE · EXPLAIN</small>
+    </footer>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
