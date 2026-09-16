@@ -2,7 +2,7 @@
 
 100日間で、LLM APIを呼ぶだけのサンプルから、評価・安全性・運用まで考えられるLLM/AIエンジニアを目指す学習プロジェクトです。
 
-現在はDay 31です。Day 1〜30相当では、構造化出力、RAG、Embedding、ChromaDB、ハイブリッド検索、Tool Calling、ReAct、状態管理を実装しました。今後の計画は[Day 31〜100カリキュラム](./CURRICULUM_DAY31_100.md)を参照してください。
+現在はDay 49まで完了しています。Day 1〜30相当では、構造化出力、RAG、Embedding、ChromaDB、ハイブリッド検索、Tool Calling、ReAct、状態管理を実装し、Day 31以降は検索・生成・引用の評価と品質監査へ進みました。今後の計画は[Day 31〜100カリキュラム](./CURRICULUM_DAY31_100.md)を参照してください。
 
 ## LLM QUEST — 学習ロードマップ
 
