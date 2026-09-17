@@ -17,7 +17,12 @@ def build_application(client: OpenAI) -> RetrievalContext:
     
     return build_retrieval_context(client, documents=DOCUMENTS)
 
-def run_query(client: OpenAI, retrieval_context: RetrievalContext, query: str) -> GroundedAnswer:
+def run_query(
+    client: OpenAI,
+    retrieval_context: RetrievalContext,
+    query: str,
+    candidate_count: int = 3,
+) -> GroundedAnswer:
     """
     1つの質問をRAG Pipelineへ渡す
     
@@ -31,10 +36,12 @@ def run_query(client: OpenAI, retrieval_context: RetrievalContext, query: str) -
     6. 引用元検証
     """
     
+    # APIやCLIごとにRAGの内部処理を書き直さず、共通関数へ委譲する。
     return answer_question(
         client=client,
         retrieval_context=retrieval_context,
         query=query,
+        candidate_count=candidate_count,
     )
     
 def is_smoke_test_passed(case: RetrievalEvaluationCase, answer: GroundedAnswer) -> bool:

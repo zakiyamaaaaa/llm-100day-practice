@@ -197,7 +197,12 @@ refusedの場合:
         allowed_source_ids=allowed_source_ids,
     )
 
-def answer_question(client: OpenAI, retrieval_context: RetrievalContext, query: str) -> GroundedAnswer:
+def answer_question(
+    client: OpenAI,
+    retrieval_context: RetrievalContext,
+    query: str,
+    candidate_count: int = 3,
+) -> GroundedAnswer:
     """
     検索から最終回答までの処理をまとめる
     
@@ -205,11 +210,13 @@ def answer_question(client: OpenAI, retrieval_context: RetrievalContext, query: 
     """
     
     # RRFで候補を集め、Rerankerで順位を再評価する。
+    # APIから受け取った候補数を、既存のRAG Pipelineへ渡す。
+    # これにより、HTTP APIの入力と検索処理の設定が分離しない。
     pipeline_result = run_pipeline(
         client=client,
         context=retrieval_context,
         query=query,
-        candidate_count=3,
+        candidate_count=candidate_count,
     )
     
     # 回答生成に使う文書だけを選び、Contextを作る
