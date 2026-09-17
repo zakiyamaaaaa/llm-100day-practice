@@ -1,0 +1,17 @@
+/* 長い日本語の解説を読むための文字サイズ。ブラウザの文字拡大も尊重する。 */
+body { font-size: 1rem; }
+.markdown p, .markdown li, .feedback p, .lab-result { font-size: 1rem; }
+.primary, .secondary, .card p, .lesson-side ul, .lab-controls label,
+.notice, .bar-row, .base-topics span, .hero p { font-size: .875rem; }
+.badge, .card-foot, .quiz-meta, .stat small, .stat p, .phase-row p,
+.side-bottom, .side-bottom small, footer, footer span { font-size: .75rem; }
+.brand small, .nav-label, .eyebrow, .side-progress > span,
+.side-progress p, .header-tag, .card .number { font-size: .75rem; }
+.card, .panel, .stat { min-width: 0; }
+.stat strong { overflow-wrap: anywhere; }
+@media (max-width: 720px) {
+  nav a { font-size: .875rem; }
+  .stats { grid-template-columns: 1fr; }
+  .lab-controls label { width: 100%; }
+  .bar-row { grid-template-columns: 5rem minmax(0, 1fr) 4rem; gap: 6px; }
+}
