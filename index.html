@@ -55,6 +55,7 @@
       <section class="adventure-layout">
         <aside class="player-panel">
           <div id="player-stats"></div>
+          <div id="character-roster" class="character-roster" aria-labelledby="character-roster-title"></div>
           <div class="rule"></div>
           <div class="checkpoint">
             <span class="overline">冒険のルール</span>
@@ -70,7 +71,7 @@
               <span class="eyebrow"><span></span> QUEST MAP</span>
               <h2>一人前への冒険地図</h2>
             </div>
-            <p>各カードを選ぶと、右側にクリア条件が表示されます。</p>
+            <p>カードを選び、ワークショップで学んで実装・検証します。</p>
           </div>
           <div id="quest-map"></div>
         </div>
@@ -84,6 +85,13 @@
       <p>教材: LLM / AIエンジニア 100日カリキュラム</p>
       <small>BUILD · EVALUATE · EXPLAIN</small>
     </footer>
+
+    <div class="workshop" id="workshop" hidden>
+      <div class="workshop-backdrop" data-workshop-close aria-hidden="true"></div>
+      <section class="workshop-dialog" role="dialog" aria-modal="true" aria-labelledby="workshop-title" aria-describedby="workshop-description">
+        <div id="workshop-content"></div>
+      </section>
+    </div>
     <script type="module" src="./app.js"></script>
   </body>
 </html>

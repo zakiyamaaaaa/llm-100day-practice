@@ -5,10 +5,12 @@ import { allQuests, phases } from "../src/game-data.js";
 import {
   STORAGE_KEY,
   createInitialProgress,
+  getHintLevel,
   getStats,
   isPhaseUnlocked,
   loadProgress,
   normalizeProgress,
+  revealHint,
   setActiveQuest,
   toggleQuest,
 } from "../src/progress.js";
@@ -65,4 +67,19 @@ test("壊れたlocalStorageデータでは安全に初期化する", () => {
     },
   };
   assert.deepEqual(loadProgress(storage, questIds), createInitialProgress());
+});
+
+test("ヒントの開示レベルはクエストごとに一段ずつ保存される", () => {
+  const questId = allQuests[0].id;
+  const initial = createInitialProgress([], questIds);
+  const firstHint = revealHint(initial, questId, "safe-env", 2);
+  assert.equal(getHintLevel(firstHint, questId, "safe-env"), 1);
+
+  const secondHint = revealHint(firstHint, questId, "safe-env", 2);
+  assert.equal(getHintLevel(secondHint, questId, "safe-env"), 2);
+  assert.equal(getHintLevel(secondHint, allQuests[1].id, "safe-env"), 0);
+
+  const reloaded = normalizeProgress(JSON.parse(JSON.stringify(secondHint)), questIds);
+  assert.equal(getHintLevel(reloaded, questId, "safe-env"), 2);
+  assert.deepEqual(revealHint(secondHint, questId, "safe-env", 2), secondHint);
 });
