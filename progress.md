@@ -1,6 +1,6 @@
 # LLM/AIエンジニア 100日進捗表
 
-更新日: 2026-09-08
+更新日: 2026-08-20
 
 記号: `[ ]` 未着手 / `[x]` 完了 / `[!]` 要復習
 
@@ -43,12 +43,12 @@
 | 065 | [x] | 21 | 100% | 未確認 | LangGraphのState・Node・Edge、Conditional Edge、node_history。既存のLLM分類・RAG・回答生成を最小Graphへ統合 |
 | 066 | [x] | 15 | 80%→100% | 未確認 | Checkpoint、InMemorySaverとSqliteSaver、checkpointerとthread_idの役割、プロセス終了後のSQLite再開 |
 | 067 | [x] | 8 | 87.5%→100% | 未確認 | Human-in-the-Loop、interrupt、Command(resume)、approve/edit/reject、承認後のAllowlist・引数検証 |
-| 068 | [x] | 11 | 63.6%→100% | 0 | Memory設計、CheckpointとStoreの分離、Summary、保存ポリシー、機密情報の拒否 |
-| 069 | [x] | 3 | 100% | 0 | MCP Tool・Resource、既存RAGの公開、MCP Inspector、Tokenizer問題との切り分け |
-| 070 | [x] | 4 | 50%→100% | 0 | Day59〜69のTool Registry、RAG/MCP、Tool回数制限、Resource取得、監査ログをAgent v1へ統合 |
-| 071 | [x] | 7 | 57%→100% | 未確認 | FastAPIでRAGを公開、/healthと/query、Pydantic入力検証、HTTP 422と回答拒否の分離 |
-| 072 | [x] | 5 | 80%→100% | 未確認 | Ingest API、source/content入力、Content Hash、inserted/unchanged/updated、古いChunk削除 |
-| 073 | [x] | 4 | 100% | 未確認 | AsyncOpenAI、await、asyncio.gather、独立したEmbedding APIの並列化、latencyと費用の分離 |
+| 068 | [ ] | — | — | — | — |
+| 069 | [ ] | — | — | — | — |
+| 070 | [ ] | — | — | — | — |
+| 071 | [ ] | — | — | — | — |
+| 072 | [ ] | — | — | — | — |
+| 073 | [ ] | — | — | — | — |
 | 074 | [ ] | — | — | — | — |
 | 075 | [ ] | — | — | — | — |
 | 076 | [ ] | — | — | — | — |
