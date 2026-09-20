@@ -1,6 +1,6 @@
 # LLM/AIエンジニア 100日進捗表
 
-更新日: 2026-07-28
+更新日: 2026-09-08
 
 記号: `[ ]` 未着手 / `[x]` 完了 / `[!]` 要復習
 
@@ -25,30 +25,30 @@
 | 047 | [x] | 6 | 66.7% | 0 | Citation Precision/Recall、引用集合の完全一致 |
 | 048 | [x] | 3 | 100% | 0 | BM25式の監査、数式修正前後のスコアと順位の比較 |
 | 049 | [x] | 3 | 100% | 0 | Chunk境界監査、形態素解析・Tokenizer・Chunkingの役割整理 |
-| 050 | [ ] | — | — | — | — |
-| 051 | [ ] | — | — | — | — |
-| 052 | [ ] | — | — | — | — |
-| 053 | [ ] | — | — | — | — |
-| 054 | [ ] | — | — | — | — |
-| 055 | [ ] | — | — | — | — |
-| 056 | [ ] | — | — | — | — |
-| 057 | [ ] | — | — | — | — |
-| 058 | [ ] | — | — | — | — |
-| 059 | [ ] | — | — | — | — |
-| 060 | [ ] | — | — | — | — |
-| 061 | [ ] | — | — | — | — |
-| 062 | [ ] | — | — | — | — |
-| 063 | [ ] | — | — | — | — |
-| 064 | [ ] | — | — | — | — |
-| 065 | [ ] | — | — | — | — |
-| 066 | [ ] | — | — | — | — |
-| 067 | [ ] | — | — | — | — |
-| 068 | [ ] | — | — | — | — |
-| 069 | [ ] | — | — | — | — |
-| 070 | [ ] | — | — | — | — |
-| 071 | [ ] | — | — | — | — |
-| 072 | [ ] | — | — | — | — |
-| 073 | [ ] | — | — | — | — |
+| 050 | [x] | 4 | 100% | 未確認 | Metadataの用途、Chunk境界問題との切り分け |
+| 051 | [x] | 4 | 100% | 未確認 | Content Hash、冪等性、古いChunkの削除理由 |
+| 052 | [x] | 4 | 100% | 未確認 | Query Rewrite、allowed_vocabularyのソフトな制約、元Query保持 |
+| 053 | [x] | 4 | 100% | 未確認 | Multi-queryとRRF、BM25失敗とVector統合の切り分け |
+| 054 | [x] | 5 | 100% | 未確認 | RRFとRerankerの順位比較、候補外文書は発見不可、追加latency/APIコスト |
+| 055 | [x] | 3 | 100% | 未確認 | Context Builder、source追跡、Token予算とContext Windowの違い |
+| 056 | [x] | 4 | 100% | 未確認 | Python・LLM・Pydanticの役割分担、Context外引用の拒否 |
+| 057 | [x] | 4 | 100% | 0 | Retrieval・Generation・Citationの失敗分類、拒否の意味、閾値の調整 |
+| 058 | [x] | 6 | 100% | 未確認 | Production RAG v1、Smoke TestとGeneration評価、Groundedと正解判定の分離 |
+| 059 | [x] | 3 | 100% | 0 | PydanticによるTool引数検証、AllowlistとTool Registry |
+| 060 | [!] | — | — | 0 | 実装スキップ。構造化エラーとtimeoutの概念のみ確認 |
+| 061 | [x] | 4 | 75% | 0 | 複数Toolの並列・順次実行、依存関係、call_idによる結果対応付け |
+| 062 | [x] | 6 | 50% | 0 | max_turnsとmax_tool_callsの違い、Token予算超過前の停止 |
+| 063 | [x] | 4 | 25% | 未確認 | Rerankerの採点基準、sourceと候補文書・最終引用の違い |
+| 064 | [x] | 23 | 74%→100% | 0 | State・Node・Edge、純粋関数、遷移テスト。初回正答率74%、最終理解率100% |
+| 065 | [x] | 21 | 100% | 未確認 | LangGraphのState・Node・Edge、Conditional Edge、node_history。既存のLLM分類・RAG・回答生成を最小Graphへ統合 |
+| 066 | [x] | 15 | 80%→100% | 未確認 | Checkpoint、InMemorySaverとSqliteSaver、checkpointerとthread_idの役割、プロセス終了後のSQLite再開 |
+| 067 | [x] | 8 | 87.5%→100% | 未確認 | Human-in-the-Loop、interrupt、Command(resume)、approve/edit/reject、承認後のAllowlist・引数検証 |
+| 068 | [x] | 11 | 63.6%→100% | 0 | Memory設計、CheckpointとStoreの分離、Summary、保存ポリシー、機密情報の拒否 |
+| 069 | [x] | 3 | 100% | 0 | MCP Tool・Resource、既存RAGの公開、MCP Inspector、Tokenizer問題との切り分け |
+| 070 | [x] | 4 | 50%→100% | 0 | Day59〜69のTool Registry、RAG/MCP、Tool回数制限、Resource取得、監査ログをAgent v1へ統合 |
+| 071 | [x] | 7 | 57%→100% | 未確認 | FastAPIでRAGを公開、/healthと/query、Pydantic入力検証、HTTP 422と回答拒否の分離 |
+| 072 | [x] | 5 | 80%→100% | 未確認 | Ingest API、source/content入力、Content Hash、inserted/unchanged/updated、古いChunk削除 |
+| 073 | [x] | 4 | 100% | 未確認 | AsyncOpenAI、await、asyncio.gather、独立したEmbedding APIの並列化、latencyと費用の分離 |
 | 074 | [ ] | — | — | — | — |
 | 075 | [ ] | — | — | — | — |
 | 076 | [ ] | — | — | — | — |
